@@ -7,8 +7,8 @@ import File from './components/File/File';
 class App extends Component {
     render() {
         return (
-            <div class="container">
-                <div class="row">
+            <div className="container">
+                <div className="row">
                    
                     <Text/>
                     <Translate />
