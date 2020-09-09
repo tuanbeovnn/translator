@@ -3,7 +3,7 @@ import * as config  from './../constant/Config';
 
 const x_rapidapi_host = "google-translate1.p.rapidapi.com";
 const x_rapidapi_key = "8918f274c7msh89d3b537ca536b1p1367b7jsn0d31b220c15c";
-const accept_encoding = "application/gzip";
+const accept_encoding = "application/javascript";
 const content_type = "application/x-www-form-urlencoded";
 const useQueryString = "true";
 export default function callApi(method = 'POST', body) {

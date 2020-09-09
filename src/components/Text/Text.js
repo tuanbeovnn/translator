@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import apiCaller from './../../utils/apiCaller';
-
-
-
 
 class Text extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            text:'',
+            lang:'',
+            result: '',
+            toLang: ''
+        }
 
+    }
     onChange = (event) => {
         let target = event.target;
         let name = target.name;
@@ -14,25 +19,49 @@ class Text extends Component {
         this.setState({
             [name] : value 
         });
-    }
-    onSubmit = (event) =>{
+        // () => {
         
-        console.log(this.onSubmit);
-        const source = document.getElementById("inlineFormCustomSelectPref").innerHTML;
-        const q = document.getElementById("comment").innerHTML;
-        const target = document.getElementById("translated").innerHTML;
-        apiCaller('POST', {
-            "source": "en",
-            "q": "Hello, world!",
-            "target": "es"
-        }).then(res =>{
-            console.log(res);
-        })
+        // }
+        // );
     }
+    
+
+    onSubmit = () => {
+       let {lang, text, toLang} = this.state;
+       
+        let details = {
+            'source': lang,
+            'q': text,
+            'target': toLang
+        };
+    
+        let formBody = [];
+        for (let property in details) {
+            let encodedKey = encodeURIComponent(property);
+            let encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+    
+        fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', {
+            method: 'POST',
+            headers: {
+                'x-rapidapi-host': 'google-translate1.p.rapidapi.com',
+                'x-rapidapi-key': '6b2e147191msh3c6f51fe8078fcfp116e7ejsnf44cf73ffa4b',
+                'accept-encoding': 'application/gzip',
+                'content-type': 'application/x-www-form-urlencoded',
+                'useQueryString': 'true'
+            },
+            body: formBody
+        }).then((response) => response.json())
+            .then((responseData) => {
+                this.props.startData(responseData.data.translations[0].translatedText);
+            });
+    };
     render() {
         return (
             <div className="col-6">
-                <form onSubmit = {()=>console.log("Hello")}>
+                <form>
                     <div className="form-group">
                         <label htmlFor="comment">Text:</label>
                         <textarea 
@@ -40,17 +69,31 @@ class Text extends Component {
                         rows="8" 
                         id="comment"
                         name="text" 
-                        value=""
-                        onChange = {this.onChange} 
+                        value={this.state.text}
+                        onChange = {(e) => this.onChange(e)} 
                         >Ozone is a form of oxygen. In Earth’s upper atmosphere, it acts as a barrier to block harmful radiation from the sun. But closer to Earth’s surface, ozone is a common pollutant. At ground level, high levels of ozone can harm people’s lungs and damage plants.</textarea>
                     </div>
-                    <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Languages</label>
+                    <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Select Languages</label>
                     <select 
                         className="custom-select" 
                         id="inlineFormCustomSelectPref"
                         required="required"
                         name="lang" 
-                        value=""
+                        value={this.state.lang}
+                        onChange = {this.onChange} 
+                    >
+                        <option >Choose...</option>
+                        <option value="en">English</option>
+                        <option value="fi">Finnish</option>
+                        <option value="vi">Vietnamese</option>
+                    </select>
+                    <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">To Languages</label>
+                    <select 
+                        className="custom-select" 
+                        id="inlineFormCustomSelectPref"
+                        required="required"
+                        name="toLang" 
+                        value={this.state.toLang}
                         onChange = {this.onChange} 
                     >
                         <option >Choose...</option>
