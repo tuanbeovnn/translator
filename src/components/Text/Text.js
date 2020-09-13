@@ -12,23 +12,32 @@ class Text extends Component {
         }
 
     }
-    onChange = (event) => {
-        let target = event.target;
-        let name = target.name;
+
+    onChangeText = (event) => {
+       let target = event.target;
+        // let name = target.name;
         let value = target.value;
-        this.setState({
-            [name] : value 
-        });
+        this.props.setTextData(
+            value
+        ); 
         // () => {
         
         // }
         // );
     }
-    
 
+    onChange = (event) => {
+        let target = event.target;
+         let name = target.name;
+        let value = target.value;
+        this.setState({
+            [name] : value
+        }); 
+    }
+    
     onSubmit = () => {
-       let {lang, text, toLang} = this.state;
-       
+       const {lang, toLang} = this.state;
+       const {text} = this.props;
         let details = {
             'source': lang,
             'q': text,
@@ -42,12 +51,11 @@ class Text extends Component {
             formBody.push(encodedKey + "=" + encodedValue);
         }
         formBody = formBody.join("&");
-    
         fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', {
             method: 'POST',
             headers: {
                 'x-rapidapi-host': 'google-translate1.p.rapidapi.com',
-                'x-rapidapi-key': '6b2e147191msh3c6f51fe8078fcfp116e7ejsnf44cf73ffa4b',
+                'x-rapidapi-key': 'e0a0abadcamsh7cdef0ee6e510c5p1c0b74jsn50d4e5fe86f0',
                 'accept-encoding': 'application/gzip',
                 'content-type': 'application/x-www-form-urlencoded',
                 'useQueryString': 'true'
@@ -55,10 +63,13 @@ class Text extends Component {
             body: formBody
         }).then((response) => response.json())
             .then((responseData) => {
-                this.props.startData(responseData.data.translations[0].translatedText);
+                if(responseData && responseData.data && responseData.data.translations && responseData.data.translations.length){
+                    this.props.setTranslated(responseData.data.translations[0].translatedText);
+                }
             });
     };
     render() {
+        const {text} = this.props;
         return (
             <div className="col-6">
                 <form>
@@ -67,11 +78,12 @@ class Text extends Component {
                         <textarea 
                         className="form-control" 
                         rows="8" 
-                        id="comment"
+                        id="comment1"
+                        onMouseOver = {this.onMouse}
                         name="text" 
-                        value={this.state.text}
-                        onChange = {(e) => this.onChange(e)} 
-                        >Ozone is a form of oxygen. In Earth’s upper atmosphere, it acts as a barrier to block harmful radiation from the sun. But closer to Earth’s surface, ozone is a common pollutant. At ground level, high levels of ozone can harm people’s lungs and damage plants.</textarea>
+                        value={text}
+                        onChangeText = {this.onChangeText} 
+                        ></textarea>
                     </div>
                     <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Select Languages</label>
                     <select 
@@ -90,7 +102,7 @@ class Text extends Component {
                     <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">To Languages</label>
                     <select 
                         className="custom-select" 
-                        id="inlineFormCustomSelectPref"
+                        id="translated_text"
                         required="required"
                         name="toLang" 
                         value={this.state.toLang}

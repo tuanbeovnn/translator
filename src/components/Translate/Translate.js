@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 class Translate extends Component {
+
+    
     render() {
         return (
             <div className="col-6">
@@ -11,8 +13,9 @@ class Translate extends Component {
                             className="form-control" 
                             rows="8" 
                             id="comment"
-                            value={this.props.endData}
+                            value={this.props.translated}
                             onChange = {()=> {return false}}
+
                             ></textarea>
                     </div>
                 </form>
