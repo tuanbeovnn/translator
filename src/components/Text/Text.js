@@ -48,14 +48,14 @@ class Text extends Component {
         for (let property in details) {
             let encodedKey = encodeURIComponent(property);
             let encodedValue = encodeURIComponent(details[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
+            formBody.push(encodedKey + "=" + encodedValue); 
         }
         formBody = formBody.join("&");
         fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', {
             method: 'POST',
             headers: {
                 'x-rapidapi-host': 'google-translate1.p.rapidapi.com',
-                'x-rapidapi-key': 'e0a0abadcamsh7cdef0ee6e510c5p1c0b74jsn50d4e5fe86f0',
+                'x-rapidapi-key': 'f00c9e3e43msh8f89c3dcbda00ecp19c2aejsn4f45ca5e6681',
                 'accept-encoding': 'application/gzip',
                 'content-type': 'application/x-www-form-urlencoded',
                 'useQueryString': 'true'
@@ -79,10 +79,9 @@ class Text extends Component {
                         className="form-control" 
                         rows="8" 
                         id="comment1"
-                        onMouseOver = {this.onMouse}
                         name="text" 
                         value={text}
-                        onChangeText = {this.onChangeText} 
+                        onChange = {this.onChangeText} 
                         ></textarea>
                     </div>
                     <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Select Languages</label>
