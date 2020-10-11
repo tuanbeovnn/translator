@@ -12,7 +12,23 @@ class Text extends Component {
         }
 
     }
+    componentDidMount() {
+        const textarea = document.getElementById("comment1");
+        console.log('textarea :>> ', textarea);
+        if(textarea){
+            textarea.onresize = this.checkResize;
+        }
+    }  
+    componentWillUnmount(){
+        const textarea = document.getElementById("comment1");
+        if(textarea){
+            textarea.removeEventListener('resize',this.checkResize)
+        }
+    }
 
+    checkResize = e => {
+        console.log('e.target :>> ', e);
+    }
     onChangeText = (event) => {
        let target = event.target;
         // let name = target.name;
@@ -51,22 +67,24 @@ class Text extends Component {
             formBody.push(encodedKey + "=" + encodedValue); 
         }
         formBody = formBody.join("&");
-        fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', {
-            method: 'POST',
-            headers: {
-                'x-rapidapi-host': 'google-translate1.p.rapidapi.com',
-                'x-rapidapi-key': 'f00c9e3e43msh8f89c3dcbda00ecp19c2aejsn4f45ca5e6681',
-                'accept-encoding': 'application/gzip',
-                'content-type': 'application/x-www-form-urlencoded',
-                'useQueryString': 'true'
-            },
-            body: formBody
-        }).then((response) => response.json())
-            .then((responseData) => {
-                if(responseData && responseData.data && responseData.data.translations && responseData.data.translations.length){
-                    this.props.setTranslated(responseData.data.translations[0].translatedText);
-                }
-            });
+        // fetch('https://google-translate1.p.rapidapi.com/language/translate/v2', {
+        //     method: 'POST',
+        //     headers: {
+        //         'x-rapidapi-host': 'google-translate1.p.rapidapi.com',
+        //         'x-rapidapi-key': 'f00c9e3e43msh8f89c3dcbda00ecp19c2aejsn4f45ca5e6681',
+        //         'accept-encoding': 'application/gzip',
+        //         'content-type': 'application/x-www-form-urlencoded',
+        //         'useQueryString': 'true'
+        //     },
+        //     body: formBody
+        // }).then((response) => response.json())
+        //     .then((responseData) => {
+        //         if(responseData && responseData.data && responseData.data.translations && responseData.data.translations.length){
+        //             this.props.setTranslated(responseData.data.translations[0].translatedText);
+        //         }
+        //     });
+        
+        this.props.setTranslated(text);
     };
     render() {
         const {text} = this.props;
@@ -82,6 +100,7 @@ class Text extends Component {
                         name="text" 
                         value={text}
                         onChange = {this.onChangeText} 
+                        style={{height: "200px"}}
                         ></textarea>
                     </div>
                     <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Select Languages</label>
