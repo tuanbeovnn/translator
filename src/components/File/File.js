@@ -17,13 +17,17 @@ class File extends Component {
         if (files.length)
             this.setState({
                 [name]: files.length ? files[0] : ''
+
+            }, () =>{
+                this.handleSubmit();
             });
+        event.target.value = "";
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = () => {
         let { file } = this.state;
         if (file) {
-            event.preventDefault();
+
             const formData = new FormData();
             formData.append('file', file);
             fetch('http://localhost:8080/uploadFile', {
@@ -37,27 +41,32 @@ class File extends Component {
                 }).catch(e => console.log('e :>> ', e));
         }
         else {
-            window.alert("Vui Long Them file");
+            window.alert("Please insert file");
         }
     }
 
     render() {
         return (
-            <div className="col-3">
-                <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="exampleFormControlFile1">Choose file input</label>
-                        <input
-                            type="file"
-                            className="form-control-file"
-                            id="exampleFormControlFile1"
-                            name="file"
-                            // value={this.state.file}
-                            onChange={this.onChange}
-                        />
-                        <input type="submit" />
+            <div className="col-6 mt-3 ">
+               
+                    <div className="border border-success rounded p-2">
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="form-group mt-3 d-flex">
+                                <label htmlFor="file"></label>
+                                <input
+                                    type="file"
+                                    className="form-control-file"
+                                    id="file"
+                                    name="file"
+                                    // value={this.state.file}
+                                    onChange={this.onChange}
+                                />
+                            </div>
+
+                        </form>
                     </div>
-                </form>
+              
+
             </div>
         );
     }

@@ -1,52 +1,81 @@
 import React, { Component } from 'react';
 import './App.css';
-import Text from './components/Text/Text';
-import Translate from './components/Translate/Translate';
-import File from './components/File/File';
+import Header from './components/Header/Header';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import routes from './routes';
+
+
 
 class App extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: '',
-            translated: '',
-            isMouseover: false
-        }
-    }
-    
-    setTextData=(text) =>{
-        this.setState({
-            text
-        })
-    }
-    
-    setTranslated = (translated) => {
-        this.setState({
-            translated
-        })
-    }
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         data: '',
+    //         translated: '',
+    //         isMouseover: false
+    //     }
+    // }
+
+    // setTextData=(text) =>{
+    //     this.setState({
+    //         text
+    //     })
+    // }
+
+    // setTranslated = (translated) => {
+    //     this.setState({
+    //         translated
+    //     })
+    // }
+
 
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <Text 
-                        setTranslated={this.setTranslated}
-                        text = {this.state.text} 
-                        setTextData = {this.setTextData}
+            <Router>
 
-                    />
-                    <Translate 
-                        translated={this.state.translated}
-                        />
-                    <File setTextData={this.setTextData} />
-                    
-                </div>
 
-            </div>
+                <Header />
+               
+                
+                    <Switch>
+                        {routes.map((route, index) => {
+                            return (
+                            
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    exact={route.exact}
+                                    component={route.main}
+
+                                />
+                            )
+                        })}
+                    </Switch>
+        
+
+
+            </Router>
         );
     }
+    showContentMenu = (routes) => {
+        var result = null;
+        if (routes.length > 0) {
+            result = routes.map((route, index) => {
+                return (
+                    <Route
+                        key={index}
+                        path={route.path}
+                        exact={route.exact}
+                        component={route.main}
+
+                    />
+                )
+            });
+        }
+        return result;
+    }
+
 
 }
 
