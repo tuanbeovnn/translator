@@ -6,7 +6,8 @@ class File extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            file: ''
+            file: '',
+            show: true
         }
 
     }
@@ -18,7 +19,7 @@ class File extends Component {
             this.setState({
                 [name]: files.length ? files[0] : ''
 
-            }, () =>{
+            }, () => {
                 this.handleSubmit();
             });
         event.target.value = "";
@@ -30,7 +31,7 @@ class File extends Component {
 
             const formData = new FormData();
             formData.append('file', file);
-            fetch('http://localhost:8080/uploadFile', {
+            fetch('http://saunakovaasa.ml:8081/uploadFile', {
                 method: 'POST',
                 body: formData
             }).then((response) => response.json())
@@ -47,25 +48,27 @@ class File extends Component {
 
     render() {
         return (
-            <div className="col-6 mt-3 ">
-               
-                    <div className="border border-success rounded p-2">
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="form-group mt-3 d-flex">
-                                <label htmlFor="file"></label>
-                                <input
-                                    type="file"
-                                    className="form-control-file"
-                                    id="file"
-                                    name="file"
-                                    // value={this.state.file}
-                                    onChange={this.onChange}
-                                />
+            <div className="col-12 mt-3 ">
+                <form onSubmit={this.handleSubmit}>
+                    <div className="form-group mt-3 d-flex">
+                        <label htmlFor="file" style={{ width: "100%" }}>
+                            <div className="image-upload-wrap" style={{ maxHeight: "300px", overflowY: "auto" }}>
+                                <div className="drag-text">
+                                {!this.state.file ? <h3>Drag and drop a file or select add Image</h3> : 
+                                <h3>{this.state.file.name}</h3>}
+                                </div>
                             </div>
-
-                        </form>
+                        </label>
+                        <input
+                            className="form-control-file"
+                            style={{ display: "none" }}
+                            id="file"
+                            type="file"
+                            name="file"
+                            onChange={this.onChange}
+                        />
                     </div>
-              
+                </form>
 
             </div>
         );

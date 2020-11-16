@@ -6,9 +6,9 @@ class Text extends Component {
         super(props);
         this.state = {
             text: '',
-            lang: 'en',
+            lang: 'it',
             result: '',
-            toLang: 'fi'
+            toLang: 'en'
         }
 
     }
@@ -47,10 +47,6 @@ class Text extends Component {
         this.setState({
             [name]: value
         });
-        // () => {
-
-        // }
-        // );
     }
 
     onScroll = (event) =>{
@@ -98,8 +94,6 @@ class Text extends Component {
                     this.props.setTranslated(responseData.data.translations[0].translatedText);
                 }
             });
-
-        // this.props.setTranslated(text);
     };
     render() {
         const { text } = this.props;
@@ -134,6 +128,7 @@ class Text extends Component {
                             <option value="en">English</option>
                             <option value="fi">Finnish</option>
                             <option value="vi">Vietnamese</option>
+                            <option value="it">Italia</option>
                         </select>
                         <label className="my-1 mr-2 position2" htmlFor="inlineFormCustomSelectPref">To</label>
                         <select
@@ -148,6 +143,7 @@ class Text extends Component {
                             <option value="en">English</option>
                             <option value="fi">Finnish</option>
                             <option value="vi">Vietnamese</option>
+                            <option value="it">Italia</option>
                         </select>
                     </div>
                 

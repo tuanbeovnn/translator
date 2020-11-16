@@ -33,7 +33,7 @@ class TranslatePage extends Component {
     }
 
     render() {
-        console.log("daylka srare: "+ this.state);
+       
         return (
             <div className="container-fluid">
                 <div className="row">

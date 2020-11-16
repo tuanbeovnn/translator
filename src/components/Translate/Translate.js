@@ -5,10 +5,8 @@ class Translate extends Component {
 
     handleHover = onHover => this.setState({ onHover })
     componentWillReceiveProps(nextProps) {
-        console.log("321312312312: "+this.props.scrollTop);
         if(nextProps.scrollTop !== this.props.scrollTop){
             const textArea = document.getElementById("comment");
-            console.log("dasdsadasdas: " +textArea);
             if(textArea) {
                 textArea.scrollTop= nextProps.scrollTop;
             }
@@ -22,8 +20,8 @@ class Translate extends Component {
             <div className="col-6 mt-3" >
                 <form >
                     <div className="form-group">
-                        {/* <label htmlFor="comment">TRANSLATED:</label> */}
-                        <h5>Translate</h5>
+                       
+                        <h5>Translated</h5>
                         <div
                             className="form-control"
                             rows="8"

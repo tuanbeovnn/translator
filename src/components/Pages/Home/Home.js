@@ -3,7 +3,6 @@ import './../../../App.css'
 class Home extends Component {
     render() {
         return (
-
             <section id="hero">
                 <div className="hero-container">
                     <h1>Tuan Nguyen</h1>

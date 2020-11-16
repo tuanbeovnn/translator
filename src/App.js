@@ -8,36 +8,10 @@ import routes from './routes';
 
 class App extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         data: '',
-    //         translated: '',
-    //         isMouseover: false
-    //     }
-    // }
-
-    // setTextData=(text) =>{
-    //     this.setState({
-    //         text
-    //     })
-    // }
-
-    // setTranslated = (translated) => {
-    //     this.setState({
-    //         translated
-    //     })
-    // }
-
-
     render() {
         return (
             <Router>
-
-
                 <Header />
-               
-                
                     <Switch>
                         {routes.map((route, index) => {
                             return (

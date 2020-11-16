@@ -38,37 +38,15 @@ class Header extends Component {
     render() {
         return (
             <div>
-                <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+                <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
                     <ul className="navbar-nav">
                         {this.showMenu(menus)}
                     </ul>
                 </nav>
-                {/* <Switch>
-                    {this.showContentMenu(routes)}
-                </Switch> */}
             </div>
 
         );
     }
-
-    // showContentMenu = (routes) => {
-    //     var result = null;
-    //     if (routes.length > 0) {
-    //         result = routes.map((route, index) => {
-    //             return (
-    //                 <Route
-    //                     key={index}
-    //                     path={route.path}
-    //                     exact={route.exact}
-    //                     component={route.main}
-
-    //                 />
-    //             )
-    //         });
-    //     }
-    //     return result;
-    // }
-
     showMenu = (menus) => {
         var result = null;
         if (menus.length > 0) {
