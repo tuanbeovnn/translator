@@ -31,7 +31,7 @@ class File extends Component {
 
             const formData = new FormData();
             formData.append('file', file);
-            fetch('http://saunakovaasa.ml:8081/uploadFile', {
+            fetch('http://saunakovaasa.ml:4000/uploadFile', {
                 method: 'POST',
                 body: formData
             }).then((response) => response.json())
